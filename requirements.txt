@@ -9,3 +9,4 @@ bcrypt==4.0.1
 google-generativeai
 websockets
 python-multipart
+pydantic-settings==2.1.0

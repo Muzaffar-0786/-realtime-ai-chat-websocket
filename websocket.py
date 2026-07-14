@@ -110,7 +110,8 @@ async def websocket_chat(
             return
 
         while True:
-                        data = await websocket.receive_json()
+            data = await 
+        websocket.receive_json()
 
             if not isinstance(data, dict):
 

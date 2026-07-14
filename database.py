@@ -1,8 +1,6 @@
 """
 Project : Real-Time AI Chat (MVP)
 File    : database.py
-
-Database configuration and session management.
 """
 
 from sqlalchemy import create_engine
@@ -12,22 +10,15 @@ from sqlalchemy.orm import sessionmaker
 from config import settings
 
 
-# --------------------------------------------------
-# Database Engine
-# --------------------------------------------------
+DATABASE_URL = settings.DATABASE_URL
+
 
 engine = create_engine(
-    settings.DATABASE_URL,
-    connect_args={"check_same_thread": False}
-    if settings.DATABASE_URL.startswith("sqlite")
-    else {},
+    DATABASE_URL,
+    connect_args={"check_same_thread": False},
     pool_pre_ping=True,
 )
 
-
-# --------------------------------------------------
-# Session Factory
-# --------------------------------------------------
 
 SessionLocal = sessionmaker(
     autocommit=False,
@@ -36,20 +27,12 @@ SessionLocal = sessionmaker(
 )
 
 
-# --------------------------------------------------
-# Base Model
-# --------------------------------------------------
-
 Base = declarative_base()
 
 
-# --------------------------------------------------
-# Dependency
-# --------------------------------------------------
-
 def get_db():
     """
-    FastAPI dependency for database session.
+    Database Dependency
     """
 
     db = SessionLocal()
@@ -59,15 +42,3 @@ def get_db():
 
     finally:
         db.close()
-
-
-# --------------------------------------------------
-# Create Tables
-# --------------------------------------------------
-
-def create_tables():
-    """
-    Create all database tables.
-    """
-
-    Base.metadata.create_all(bind=engine)
